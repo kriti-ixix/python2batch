@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 21 14:17:35 2021
-
-@author: kritixblaze
-"""
-
 example = "Hello World!"
 tweet = "Hi #Twitter #Nice"
 

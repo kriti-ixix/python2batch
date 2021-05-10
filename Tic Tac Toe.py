@@ -1,7 +1,16 @@
 # Importing the libraries
+import os
 
 # Global variables
 theBoard = {'1':' ', '2':' ', '3':' ', '4':' ', '5':' ', '6':' ', '7':' ', '8':' ', '9':' '}
+
+def clearScreen():
+	if os.name == 'posix':
+		#For UNIX system 'posix':
+		_ = os.system('clear')
+	else:
+		#For Windows system 'nt':
+		_ = os.system('cls')
 
 # User defined functions
 def printBoard(board):
@@ -62,10 +71,25 @@ def checkWin(turn):
         winner = turn
 
     #Checking diagonals
-    if (theBoard['7']==theBoard['5']==theBoard['2']==turn) or (theBoard['9']==theBoard['5']==theBoard['1']==turn):
+    if (theBoard['7']==theBoard['5']==theBoard['3']==turn) or (theBoard['9']==theBoard['5']==theBoard['1']==turn):
         winner = turn
 
     return winner #Value can be '', 'X', 'O'
-        
+
+def restartGame():
+    choice = input("Would you like to play again? (Y/N): ")
+    if choice.lower() == 'y':
+        for values in theBoard:
+            theBoard[values] = ' '
+        clearScreen()
+        main()
+    else:
+        print("Thank you for playing!")
+
 # Main function
-playGame()
+def main():
+    playGame()
+    restartGame()
+
+if __name__ == '__main__':
+    main()

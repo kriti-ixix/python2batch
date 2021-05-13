@@ -1,0 +1,4 @@
+Note 1: Hi
+Note 2: How are you?
+Note 3: We are studying Python
+Note 4: Topic is file handling

@@ -31,14 +31,54 @@ def drawCards(numCards):
 	'''
 	return cardsDrawn
 
+#To show the hand of the current player
+def showHand(player, playerHand):
+	print("It's {}'s turn".format(player))
+	print("Your Hand:")
+	print("---------------------------------")
+	y = 1
+	for card in playerHand:
+		print("{}) {}".format(y, card))
+		y += 1
+	print("")
+
+
 #Main function
 unoDeck = buildDeck()
-print("")
-print(unoDeck)
 random.shuffle(unoDeck)
+discards = [] #List of discards
+players = [] #List of cards for all players
+playerNames = [] #Names of players
+
+#Getting players names and assigning five cards to each player
+numPlayers = int(input("How many players? "))
+for i in range(numPlayers):
+	name = input("Enter player name: ")
+	playerNames.append(name)
+	players.append(drawCards(5))
+
+#Printing out the cards assigned to each player
+print("\nThe cards are: ")
+for (name, cards) in zip(playerNames, players):
+	print("Player {} has {}".format(name, cards))
 print("")
-print(unoDeck)
-print("Cards drawn:")
-print(drawCards(5))
-print("\n", unoDeck)
-players = []
+
+#Setting up the game
+playerTurn = 0
+playDirection = 1
+playing = True
+winner = ""
+
+discards.append(unoDeck.pop(0))
+splitCard = discards[0].split(" ", 1)
+currentColour = splitCard[0]
+if currentColour != "Wild":
+	cardVal = splitCard[1]
+else:
+	cardVal = "Any"
+
+
+#Main loop
+while playing:
+	showHand(playerNames[playerTurn], players[playerTurn])
+	break

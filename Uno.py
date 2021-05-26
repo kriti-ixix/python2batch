@@ -42,6 +42,15 @@ def showHand(player, playerHand):
 		y += 1
 	print("")
 
+#To check if the user can play a card
+def canPlay(colour, value, playerHand):
+	for card in playerHand:
+		if "Wild" in card:
+			return True
+		elif colour in card or value in card:
+			return True
+	return False
+
 
 #Main function
 unoDeck = buildDeck()
@@ -81,4 +90,34 @@ else:
 #Main loop
 while playing:
 	showHand(playerNames[playerTurn], players[playerTurn])
+	print("Card on top of the discards pile:", discards[-1])
+
+	#Checking if the player has a valid card
+	if canPlay(currentColour, cardVal, players[playerTurn]):
+		cardChosen = int(input("Enter the card you want to play: "))
+
+		#Checking if the card picked is within the range
+		while cardChosen > len(players[playerTurn]):
+			cardChosen = int(input("Out of range. Enter the card you want to play: "))
+
+		#Checking if the player picked a valid card
+		while not canPlay(currentColour, cardVal, [players[playerTurn][cardChosen-1]]):
+			cardChosen = int(input("Invalid card. Pick a different card: "))
+
+		print("You played", players[playerTurn][cardChosen-1])
+		discards.append(players[playerTurn].pop(cardChosen-1))
+
+		showHand(playerNames[playerTurn], players[playerTurn])
+		print("Card on top of the discards pile:", discards[-1])
+
+		#Checking if any player won
+
+
+	else:
+		input("Press enter to draw a card")
+		players[playerTurn].extend(drawCards(1))
+
+	#Next player's turn
+
+
 	break

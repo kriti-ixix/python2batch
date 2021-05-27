@@ -89,6 +89,7 @@ else:
 
 #Main loop
 while playing:
+	print("")
 	showHand(playerNames[playerTurn], players[playerTurn])
 	print("Card on top of the discards pile:", discards[-1])
 
@@ -104,20 +105,69 @@ while playing:
 		while not canPlay(currentColour, cardVal, [players[playerTurn][cardChosen-1]]):
 			cardChosen = int(input("Invalid card. Pick a different card: "))
 
-		print("You played", players[playerTurn][cardChosen-1])
+		print("\nYou played", players[playerTurn][cardChosen-1])
 		discards.append(players[playerTurn].pop(cardChosen-1))
 
-		showHand(playerNames[playerTurn], players[playerTurn])
+		#showHand(playerNames[playerTurn], players[playerTurn])
 		print("Card on top of the discards pile:", discards[-1])
 
 		#Checking if any player won
+		if len(players[playerTurn]) == 0:
+			playing = False
+			winner = playerNames[playerTurn]
+		else:
+			#Checking for special cards
+			splitCard = discards[-1].split(" ", 1)
+			currentColour = splitCard[0]
+			if len(splitCard) == 1:
+				cardVal = "Any"
+			else:
+				cardVal = splitCard[1]
+			
+			#In case player played the wild card
 
+			#Checking for special cards 
+			if cardVal == 'Reverse':
+				playDirection = playDirection * -1
+				print("The game is now in reverse")
+
+			elif cardVal == 'Skip':
+				playerTurn += playDirection
+				if playerTurn >= numPlayers:
+					playerTurn = 0
+				elif playerTurn < 0:
+					playerTurn = numPlayers - 1	
+				print("{}'s turn is now skipped".format(playerNames[playerTurn]))
+						
+			elif cardVal == 'Draw Two':
+				playerTurn += playDirection
+				if playerTurn >= numPlayers:
+					playerTurn = 0
+				elif playerTurn < 0:
+					playerTurn = numPlayers - 1	
+				players[playerTurn].extend(drawCards(2))
+				print("{} has to draw two cards".format(playerNames[playerTurn]))
+
+			elif cardVal == 'Draw Four':
+				playerTurn += playDirection
+				if playerTurn >= numPlayers:
+					playerTurn = 0
+				elif playerTurn < 0:
+					playerTurn = numPlayers - 1	
+				players[playerTurn].extend(drawCards(4))
+				print("{} has to draw four cards".format(playerNames[playerTurn]))
 
 	else:
 		input("Press enter to draw a card")
 		players[playerTurn].extend(drawCards(1))
 
 	#Next player's turn
+	playerTurn += playDirection
+	if playerTurn >= numPlayers:
+		playerTurn = 0
+	elif playerTurn < 0:
+		playerTurn = numPlayers - 1
 
 
-	break
+print("Game Over!")
+print("{} is the winner!".format(winner))

@@ -7,7 +7,7 @@ x1 -> class mein attention -> 10 <br>
 x2 -> number of hours spent studying -> 6 <br>
 x3 -> health -> 4 <br>
 
-#Dependent variable
+#Dependent variable <br>
 y -> Marks? 82%
 
 10x1 + 6x2 + 4x3 = y
